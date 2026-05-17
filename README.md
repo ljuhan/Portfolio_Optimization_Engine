@@ -1,18 +1,23 @@
 # Efficient Frontier Portfolio Optimizer
 
 ## Overview
-This project implements **Modern Portfolio Theory (MPT)** to construct optimal investment portfolios using Python. 
+This project implements **Modern Portfolio Theory (MPT)** to construct optimal investment portfolios using Python.
 
-By analyzing the historical covariance of a multi-asset basket (AAPL, NVDA, MSFT, GOOGL, AMZN), the engine simulates **10,000 portfolio combinations** to identify two critical strategies:
-1.  **Maximum Sharpe Ratio:** The portfolio that delivers the highest risk-adjusted return.
-2.  **Global Minimum Variance (GMV):** The portfolio with the absolute lowest volatility.
+By analyzing the historical covariance of a **diversified multi-asset basket** (US equities, tech, gold, bonds, real estate, international equities, and energy), the engine combines **Monte Carlo simulation** with **analytical SLSQP optimization** to identify two critical strategies:
+1. **Maximum Sharpe Ratio:** The portfolio that delivers the highest risk-adjusted return.
+2. **Global Minimum Variance (GMV):** The portfolio with the absolute lowest volatility.
+
+Assets were selected across uncorrelated classes — equities, bonds, commodities, and real estate — to ensure the efficient frontier reflects genuine diversification benefits rather than variance within a single sector.
 
 ## Key Features
-* **Covariance Matrix Analysis:** Calculates asset correlation to identify diversification benefits.
-* **Monte Carlo Optimization:** Simulates random weight allocations to map the Efficient Frontier.
-* **Visual Analytics:** Generates a Scatter Plot of the Efficient Frontier, highlighting optimal vs. conservative allocation points.
+* **Diversified Multi-Asset Universe:** SPY, AAPL, GLD, TLT, VNQ, EFA, XLE — spanning 7 asset classes to produce a well-conditioned covariance matrix.
+* **Correlation Heatmap:** Visualises inter-asset correlations to confirm diversification is working as MPT requires.
+* **Monte Carlo Simulation:** 10,000 random weight allocations map the shape of the Efficient Frontier.
+* **Analytical Optimization:** `scipy.optimize.minimize` with SLSQP finds the *true* maximum Sharpe and minimum variance portfolios — not just the best of 10,000 random guesses.
+* **Portfolio Weights Table:** Translates optimal points on the frontier into concrete asset allocations.
 
 ## Tech Stack
 * **Python (NumPy, Pandas)** for matrix algebra and statistical modeling.
-* **Matplotlib** for data visualization.
-* **YFinance API** for real-time asset pricing.
+* **SciPy** for constrained convex optimization (SLSQP).
+* **Seaborn / Matplotlib** for data visualization.
+* **YFinance API** for historical asset pricing.
